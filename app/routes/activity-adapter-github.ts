@@ -17,26 +17,20 @@ const fetchFiles = async (commitUrl: string) => {
 };
 
 const getExtensionOf = (commitFile: any) => {
-  //const regex = /^(.*\.(?!(class)$))?[^.]*$/;
   const regex = /\.[0-9a-z]+$/i;
   return commitFile.filename.match(regex)[0];
 };
 
 export const ActivityAdapterGithub = (activity: TActivity, files: any) => {
   const {type, payload, created_at, repo} = activity;
-  //console.log('activity.tsx >> type', type);
   const platform = 'GITHUB.COM';
   if (type === "PushEvent") {
+    // FIXME: checking all commits instead of just the first?
     const matchingFile = files
       .filter((file: any) => file.sha === payload.commits[0].sha)
       .map((file: any) => file.files[0]);
     const coding_lang = getExtensionOf(matchingFile[0]);
     const multipleMessages = map(payload.commits);
-
-    // FIXME: checking all commits instead of just the first?
-    //const commitFiles= fetchFiles(payload.commits[0].url)
-    //const coding_lang = getExtensionOf(commitFiles[0]);
-    //console.log('coding_lang', coding_lang);
 
     return activitySerializer(
       map(payload.commits),
@@ -71,13 +65,19 @@ export const ActivityAdapterGithub = (activity: TActivity, files: any) => {
     )
   }
   else if (type === "CreateEvent") {
+    const message = payload.ref_type === 'repository'
+      ? activity.repo.name
+      : payload.ref
+    const action = payload.ref_type === 'repository'
+      ? 'repository'
+      : 'branch'
     return activitySerializer(
-      [payload.ref],
+      [message],
       platform,
       created_at,
       undefined,
       undefined,
-      "new branch created.",
+      `new ${action} created.`,
       payload.ref_type
     )
   }
@@ -137,13 +137,4 @@ export const ActivityAdapterGithub = (activity: TActivity, files: any) => {
 const map = (list: [{message: string}]) => {
   return list.map(i => i.message);
 }
-
-  // PushEvent: payload.commits[0].message -- done
-  // IssueCommentEvent: payload.comment.body -- done
-  // DeleteEvent: payload.ref & payload.ref_type -- done
-  // CreateEvent: payload.ref & payload.ref_type -- done
-  // PullRequestEvent: payload.pull_request.title -- done
-  // PullRequestReviewEvent: ? -- skipped
-  // PullRequestReviewCommentEvent: payload.comment.body -- done
-  // IssuesEvent: payload.issue.title
 
