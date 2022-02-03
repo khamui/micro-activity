@@ -5,5 +5,4 @@ This repository is in development and will be improved gradually.
 If you are a developer or want to use it for yourself. Feel free!
 
 ## How does it look like?
-
-screenshot to be added!
+<img width="2806" alt="screen_microactivity" src="https://user-images.githubusercontent.com/52801593/152366952-aa73b6ad-08c9-4152-a226-1a610ba3e0ad.png">
