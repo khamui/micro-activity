@@ -71,13 +71,19 @@ export const ActivityAdapterGithub = (activity: TActivity, files: any) => {
     )
   }
   else if (type === "CreateEvent") {
+    const message = payload.ref_type === 'repository'
+      ? activity.repo.name
+      : payload.ref
+    const action = payload.ref_type === 'repository'
+      ? 'repository'
+      : 'branch'
     return activitySerializer(
-      [payload.ref],
+      [message],
       platform,
       created_at,
       undefined,
       undefined,
-      "new branch created.",
+      `new ${action} created.`,
       payload.ref_type
     )
   }
