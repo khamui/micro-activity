@@ -104,7 +104,7 @@ export const ActivityAdapterGithub = (activity: TActivity, files: any) => {
       payload.review.hmtl_url,
       undefined,
       "activity on pull request detected.",
-      "pull-request"
+      "pull-request-review"
     )
   }
   else if (type === "PullRequestReviewCommentEvent") {
@@ -115,7 +115,7 @@ export const ActivityAdapterGithub = (activity: TActivity, files: any) => {
       payload.comment.html_url,
       undefined,
       "commented.",
-      "pull-request"
+      "pull-request-review-comment"
     )
   }
   else if (type === "IssuesEvent") {

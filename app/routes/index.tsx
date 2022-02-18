@@ -11,6 +11,13 @@ interface TResponseData {
   twitter: any
 };
 
+const EXCLUDEDTYPES = [
+  'pull-request-review',
+  'pull-request-review-comment',
+  'issue',
+  'branch'
+];
+
 export const links: LinksFunction = () => {
   return [
     // add a favicon
@@ -97,10 +104,12 @@ export const loader = async () => {
 
 export default function Activities() {
   const activities = useLoaderData();
+  const filteredActivities = activities.filter((a: any) =>
+    !EXCLUDEDTYPES.includes(a.messagetype))
   return (
     <div className="page-container">
       <div className="activities-container collapsed">
-        {activities.map((activity: Object, idx: number) =>
+        {filteredActivities.map((activity: Object, idx: number) =>
           <Activity key={`activity_${idx}`} data={activity} />)}
       </div>
     </div>
