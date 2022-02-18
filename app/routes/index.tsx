@@ -2,8 +2,8 @@ import { useLoaderData } from "remix";
 import type { LinksFunction } from "remix";
 import stylesHref from "../styles/index.css";
 import { Activity } from "./activity";
-import { ActivityAdapterGithub } from './activity-adapter-github';
-import { ActivityAdapterTwitter } from './activity-adapter-twitter';
+import { ActivityAdapterGithub as aagh } from './activity-adapter-github';
+import { ActivityAdapterTwitter as aatw } from './activity-adapter-twitter';
 
 interface TResponseData {
   github: any,
@@ -28,17 +28,16 @@ export const links: LinksFunction = () => {
 };
 
 const serializeActivities = (responseData: TResponseData) => {
-  const serializedGithubData = 
-    responseData.github
-      .map((activityGithub) => ActivityAdapterGithub(activityGithub, responseData.github_files));
-  const serializedTwitterData = 
-    responseData.twitter.data
-      .map((activityTwitter) => ActivityAdapterTwitter(activityTwitter));
+  const { twitter, github, github_files } = responseData;
+  const serializedGithubData = github
+    .map((activityGithub: any) => aagh(activityGithub, github_files));
+  const serializedTwitterData = twitter.data
+    .map((activityTwitter: any) => aatw(activityTwitter));
 
   return [...serializedGithubData, ...serializedTwitterData];
 }
 
-const byDiffDays = (a, b) => {
+const byDiffDays = (a: {diff_days: number}, b: {diff_days: number}) => {
   if (a.diff_days < b.diff_days){
     return -1;
   }
@@ -78,11 +77,13 @@ export const loader = async () => {
   responseData.github = await fetchConvert(githubUrl, { headers: githubHeaders });
   const filesApiUrls = await getFilesUrls(responseData.github);
   responseData.github_files = await Promise.all(
-    await filesApiUrls.map((filesUrl: string) => fetchConvert(filesUrl, { headers: githubHeaders }))
+    await filesApiUrls
+      .map((filesUrl: string) => fetchConvert(filesUrl, { headers: githubHeaders }))
   ); 
 
   // Twitter data fetching
-  const twitterUrl = `https://api.twitter.com/2/users/${twitterId}/tweets?tweet.fields=created_at`
+  const twitterUrl =
+    `https://api.twitter.com/2/users/${twitterId}/tweets?tweet.fields=created_at`
   const twitterHeaders = {
     'Authorization': `Bearer ${twitterToken}`,
   }
