@@ -13,7 +13,6 @@ const getDays = (diffDays: number) => {
 }
 
 export const Activity = (props: any) => {
-  //console.log('Activity: ', props.data);
   const { data } = props;
   const [currCommit, setCurrCommit] = useState(0);
 
@@ -32,7 +31,11 @@ export const Activity = (props: any) => {
   }
 
   const codingLangBadge = () => {
-    return <span className="activity-card-info__coding-lang">{data.coding_lang}</span>
+    return (
+      <span className="activity-card-info__coding-lang">
+        {data.coding_lang}
+      </span>
+    )
   }
 
   return (
@@ -41,7 +44,8 @@ export const Activity = (props: any) => {
       <div className="activity-card-content">
         <div className="activity-card-info">
           <div className={`activity-card-info__header--${platform}`}>
-            {data.platform} | {data.action} {data.coding_lang && codingLangBadge()}
+            {data.platform}&nbsp;
+            [{data.action}] {data.coding_lang && codingLangBadge()}
           </div>
           <div className="activity-card-info__messagetype">
             {data.messagetype} 
@@ -51,7 +55,9 @@ export const Activity = (props: any) => {
           </div>
           <div className="activity-card-info__actions">
             {hasLink && <div className="activity-card-info__link">
-              <a href={data.html_url} target="_blank">Bring me there -&gt;</a>
+              <a href={data.html_url} target="_blank">
+                Bring me there -&gt;
+              </a>
             </div>}
             {hasMultiple && <div className="activity-card-info__crumb">
               <button
