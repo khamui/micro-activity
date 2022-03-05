@@ -4,19 +4,13 @@ import stylesHref from "../styles/index.css";
 import { Activity } from "./activity";
 import { ActivityAdapterGithub as aagh } from './activity-adapter-github';
 import { ActivityAdapterTwitter as aatw } from './activity-adapter-twitter';
+import C from '../miconfig';
 
 interface TResponseData {
   github: any,
   github_files: any,
   twitter: any
 };
-
-const EXCLUDEDTYPES = [
-  'pull-request-review',
-  'pull-request-review-comment',
-  'issue',
-  'branch'
-];
 
 export const links: LinksFunction = () => {
   return [
@@ -67,6 +61,9 @@ const getFilesUrls = (inputData: any) => {
     });
 };  
 
+const getProvider = (providerName: string) => {
+  return C.providers.find((provider: any) => provider.name === providerName)
+}
 
 export const loader = async () => {
   const responseData: TResponseData = { github: [], github_files: [], twitter: [] }; 
@@ -77,11 +74,13 @@ export const loader = async () => {
   const githubUser = process.env.USER;
 
   // Github data fetching + dependent fetching (files)
-  const githubUrl = `https://api.github.com/users/${githubUser}/events`;
+  const gh =  getProvider('github');
   const githubHeaders = {
-    'Authorization': `token ${githubToken}`,
+    'Authorization': gh.token.replace('$githubToken', githubToken),
   }
-  responseData.github = await fetchConvert(githubUrl, { headers: githubHeaders });
+  responseData.github = await fetchConvert(
+    gh.apiUrl.replace('$githubUser', githubUser), { headers: githubHeaders }
+  );
   const filesApiUrls = await getFilesUrls(responseData.github);
   responseData.github_files = await Promise.all(
     await filesApiUrls
@@ -89,12 +88,13 @@ export const loader = async () => {
   ); 
 
   // Twitter data fetching
-  const twitterUrl =
-    `https://api.twitter.com/2/users/${twitterId}/tweets?tweet.fields=created_at`
+  const tw = getProvider('twitter')
   const twitterHeaders = {
-    'Authorization': `Bearer ${twitterToken}`,
+    'Authorization': tw.token.replace('$twitterToken', twitterToken)
   }
-  const rawTwitter = await fetch(twitterUrl, { headers: twitterHeaders });
+  const rawTwitter = await fetch(
+    tw.apiUrl.replace('$twitterId', twitterId), { headers: twitterHeaders }
+  );
   responseData.twitter = await rawTwitter.json(); 
   
   const serializedResponseData = serializeActivities(responseData);
@@ -105,7 +105,7 @@ export const loader = async () => {
 export default function Activities() {
   const activities = useLoaderData();
   const filteredActivities = activities.filter((a: any) =>
-    !EXCLUDEDTYPES.includes(a.messagetype))
+    !C.excludedTypes.includes(a.messagetype));
   return (
     <div className="page-container">
       <div className="activities-container collapsed">
