@@ -22,6 +22,7 @@ module.exports = {
     ],
     "rules": {
       "max-len": ["error"],
-      "@typescript-eslint/no-explicit-any": "off"
+      "@typescript-eslint/no-explicit-any": "off",
+      "brace-style": ["error", "stroustrup"]
     }
 }
