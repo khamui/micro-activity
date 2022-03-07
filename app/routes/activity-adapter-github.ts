@@ -33,7 +33,8 @@ export const ActivityAdapterGithub = (activity: TActivity, files: any) => {
       "code submitted",
       "commit"
     );
-  } else if (type === "IssueCommentEvent") {
+  }
+ else if (type === "IssueCommentEvent") {
     return activitySerializer(
       [payload.comment.body],
       platform,
@@ -43,7 +44,8 @@ export const ActivityAdapterGithub = (activity: TActivity, files: any) => {
       "commented",
       "comment"
     );
-  } else if (type === "DeleteEvent") {
+  }
+ else if (type === "DeleteEvent") {
     return activitySerializer(
       [payload.ref],
       platform,
@@ -53,7 +55,8 @@ export const ActivityAdapterGithub = (activity: TActivity, files: any) => {
       "branch deleted",
       payload.ref_type
     );
-  } else if (type === "CreateEvent") {
+  }
+ else if (type === "CreateEvent") {
     const message =
       payload.ref_type === "repository" ? activity.repo.name : payload.ref;
     const action = payload.ref_type === "repository" ? "repository" : "branch";
@@ -66,7 +69,8 @@ export const ActivityAdapterGithub = (activity: TActivity, files: any) => {
       `new ${action} created`,
       payload.ref_type
     );
-  } else if (type === "PullRequestEvent") {
+  }
+ else if (type === "PullRequestEvent") {
     const action =
       payload.action === "opened"
         ? "review requested"
@@ -81,7 +85,8 @@ export const ActivityAdapterGithub = (activity: TActivity, files: any) => {
       action,
       "pull-request"
     );
-  } else if (type === "PullRequestReviewEvent") {
+  }
+ else if (type === "PullRequestReviewEvent") {
     return activitySerializer(
       [payload.pull_request.title],
       platform,
@@ -91,7 +96,8 @@ export const ActivityAdapterGithub = (activity: TActivity, files: any) => {
       "activity on pull request detected",
       "pull-request-review"
     );
-  } else if (type === "PullRequestReviewCommentEvent") {
+  }
+ else if (type === "PullRequestReviewCommentEvent") {
     return activitySerializer(
       [payload.comment.body],
       platform,
@@ -101,7 +107,8 @@ export const ActivityAdapterGithub = (activity: TActivity, files: any) => {
       "commented",
       "pull-request-review-comment"
     );
-  } else if (type === "IssuesEvent") {
+  }
+ else if (type === "IssuesEvent") {
     return activitySerializer(
       [payload.issue.title],
       platform,
@@ -111,7 +118,8 @@ export const ActivityAdapterGithub = (activity: TActivity, files: any) => {
       "issue changed or modified",
       "issue"
     );
-  } else if (type === "WatchEvent") {
+  }
+ else if (type === "WatchEvent") {
     return activitySerializer(
       [repo.name],
       platform,
@@ -121,7 +129,8 @@ export const ActivityAdapterGithub = (activity: TActivity, files: any) => {
       "watched",
       "watch-event"
     );
-  } else {
+  }
+ else {
     return activitySerializer(["unknown"], platform);
   }
 };

@@ -3,9 +3,11 @@ import React, { useState } from "react";
 const getDays = (diffDays: number) => {
   if (diffDays < 1) {
     return "Today";
-  } else if (diffDays < 2) {
+  }
+ else if (diffDays < 2) {
     return "Yesterday";
-  } else {
+  }
+ else {
     return `${Math.round(diffDays)} days ago`;
   }
 };
