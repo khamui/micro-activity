@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Links,
   LiveReload,
@@ -5,9 +6,25 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  Link
 } from "remix";
 import type { MetaFunction } from "remix";
+import type { LinksFunction } from "remix";
+import stylesHref from "./styles/index.css";
+
+export const links: LinksFunction = () => {
+  return [
+    // add a favicon
+    {
+      rel: "icon",
+      href: "/favicon.ico",
+      type: "image/png",
+    },
+
+    // add a local stylesheet, remix will fingerprint the file name for
+    // production caching
+    { rel: "stylesheet", href: stylesHref },
+  ];
+};
 
 export const meta: MetaFunction = () => {
   return { title: "Kha's contribution activities" };
