@@ -1,4 +1,4 @@
-import { activitySerializer } from "./activity-serializer";
+import { activitySerializer } from "../serializers/activity-serializer";
 
 interface TTwitterActivity {
   created_at: string;

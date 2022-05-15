@@ -1,4 +1,4 @@
-import { activitySerializer } from "./activity-serializer";
+import { activitySerializer } from "../serializers/activity-serializer";
 
 interface TActivity {
   created_at: string;

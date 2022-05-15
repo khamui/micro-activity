@@ -11,6 +11,7 @@ const config = {
     "issue",
     "branch",
   ],
+  excludedOrgs: ["liqd"],
   providers: [
     {
       name: "github",

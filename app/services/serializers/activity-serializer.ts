@@ -29,7 +29,7 @@ export const activitySerializer = (
   html_url?: string,
   coding_lang?: any,
   action?: string,
-  messagetype?: string
+  messagetype?: string,
 ): TMessage => {
   return {
     messages,
