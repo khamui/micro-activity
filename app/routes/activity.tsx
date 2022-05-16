@@ -1,4 +1,20 @@
 import React, { useState } from "react";
+import {
+  Box,
+  Label,
+  CircleBadge,
+  Link,
+  Timeline,
+  StyledOcticon,
+  Truncate,
+  Flash
+} from "@primer/react";
+import {
+  LogoGithubIcon,
+  ArrowRightIcon,
+  GitCommitIcon,
+  SquirrelIcon
+} from "@primer/octicons-react";
 
 const getDays = (diffDays: number) => {
   if (diffDays < 1) {
@@ -12,74 +28,116 @@ const getDays = (diffDays: number) => {
   }
 };
 
+const getDaysVariant = (diffDays: number) => {
+  if (diffDays < 1) {
+    return "success";
+  }
+  else if (diffDays < 2) {
+    return "warning";
+  }
+  else {
+    return "danger";
+  }
+};
+
 export const Activity = (props: any) => {
   const { data } = props;
-  const [currCommit, setCurrCommit] = useState(0);
 
-  const hasMultiple = data.messages.length > 1;
-  const hasLink = data.html_url;
-  const platform = data.platform === "GITHUB.COM" ? "github" : "twitter";
-
-  const prevCommitButton = () => {
-    return setCurrCommit(currCommit - 1);
-  };
-
-  const nextCommitButton = () => {
-    return setCurrCommit(currCommit + 1);
-  };
-
-  const codingLangBadge = () => {
+  const codingLangLabel = () => {
     return (
-      <span className="activity-card-info__coding-lang">
+      <Label variant="accent">
         {data.coding_lang}
-      </span>
+      </Label>
+    );
+  };
+
+  const contributionLabel = () => {
+    return (
+      <Label variant="secondary">
+        {data.action}
+      </Label>
+    );
+  };
+
+  const typeLabel = () => {
+    return (
+      <Label variant="secondary">
+        {data.messagetype}
+      </Label>
     );
   };
 
   return (
-    <div className="activity-card">
-      <div className={`activity-card-indicator--${platform}`} />
-      <div className="activity-card-content">
-        <div className="activity-card-info">
-          <div className={`activity-card-info__header--${platform}`}>
-            {data.platform}&nbsp; [{data.action}]{" "}
-            {data.coding_lang && codingLangBadge()}
-          </div>
-          <div className="activity-card-info__messagetype">
-            {data.messagetype}
-          </div>
-          <div className="activity-card-info__message">
-            &quot;{data.messages[currCommit]}&quot;
-          </div>
-          <div className="activity-card-info__actions">
-            {hasLink && (
-              <div className="activity-card-info__link">
-                <a href={data.html_url} target="_blank" rel="noreferrer">
-                  Bring me there -&gt;
-                </a>
-              </div>
-            )}
-            {hasMultiple && (
-              <div className="activity-card-info__crumb">
-                <button
-                  className="button--reset activity-card-commit__button"
-                  onClick={prevCommitButton}
-                >
-                  &lt;&lt;
-                </button>
-                {`${currCommit + 1}/${data.messages.length}`}
-                <button
-                  className="button--reset activity-card-commit__button"
-                  onClick={nextCommitButton}
-                >
-                  &gt;&gt;
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-        <div className="activity-card-date">{getDays(data.diff_days)}</div>
-      </div>
-    </div>
+    <Box
+      p={3}
+      my={3}
+      display="flex"
+      justifyContent="space-between"
+      alignItems="center"
+      borderColor="border.default"
+      borderWidth={1}
+      borderStyle="solid"
+    >
+      <Box display="flex" alignItems="center">
+        <Box>
+          <CircleBadge
+            sx={{
+              borderColor: 'neutral.subtle',
+              borderWidth: 1,
+              borderStyle: 'solid'
+            }}
+            variant="medium"
+          >
+            {data.platform === "GITHUB.COM"
+              ? <LogoGithubIcon size={16} />
+              : <SquirrelIcon size={24} />
+            }
+          </CircleBadge>
+        </Box>
+        <Box p={2}>
+          <Box p={1}>
+            {data.action && contributionLabel()}{" "}
+            {data.messagetype && typeLabel()}{" "}
+            {data.coding_lang && codingLangLabel()}
+          </Box>
+          <Box p={1}>
+            <Timeline>
+              {data.messages.map((message: any, index: number) => {
+                return (
+                <Timeline.Item condensed key={index}>
+                  <Timeline.Badge>
+                    <StyledOcticon icon={GitCommitIcon} />
+                  </Timeline.Badge>
+                  <Timeline.Body>
+                    <Truncate maxWidth={500} title={message}>
+                      {message}{" "}
+                      <Link
+                        sx={{fontSize: 1}}
+                        href={data.html_url}
+                      >
+                        Go to{" "}
+                        <ArrowRightIcon size={14} />
+                      </Link>
+                    </Truncate>
+                  </Timeline.Body>
+                </Timeline.Item>
+                )
+              })}
+            </Timeline>
+          </Box>
+        </Box>
+      </Box>
+      <Box>
+        <Flash
+          sx={{
+            fontSize: 1,
+            color: `${getDaysVariant(data.diff_days)}.fg`
+          }}
+          variant={getDaysVariant(data.diff_days)}
+        >
+          {getDays(data.diff_days)}
+        </Flash>
+      </Box>
+    </Box>
   );
 };
