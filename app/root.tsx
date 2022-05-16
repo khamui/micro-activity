@@ -9,7 +9,6 @@ import {
 } from "remix";
 import type { MetaFunction } from "remix";
 import type { LinksFunction } from "remix";
-import stylesHref from "./styles/index.css";
 
 export const links: LinksFunction = () => {
   return [
@@ -19,10 +18,6 @@ export const links: LinksFunction = () => {
       href: "/favicon.ico",
       type: "image/png",
     },
-
-    // add a local stylesheet, remix will fingerprint the file name for
-    // production caching
-    { rel: "stylesheet", href: stylesHref },
   ];
 };
 
