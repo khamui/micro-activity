@@ -77,6 +77,7 @@ export const Activity = (props: any) => {
       borderColor="border.default"
       borderWidth={1}
       borderStyle="solid"
+      borderRadius={6}
     >
       <Box display="flex" alignItems="center">
         <Box>
