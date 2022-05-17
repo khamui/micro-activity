@@ -9,7 +9,9 @@ import {
   PageLayout,
   useTheme,
   ToggleSwitch,
-  Link
+  Link,
+  Heading,
+  PointerBox
 } from "@primer/react";
 
 export const loader = async () => {
@@ -21,6 +23,7 @@ function SwitchButton() {
   const {colorMode, setColorMode} = useTheme()
   return (
     <ToggleSwitch
+      size="small"
       aria-labelledby="switch-button-day-night-modes"
       onChange={
         () => setColorMode(colorMode === 'day' ? 'night' : 'day')
@@ -40,16 +43,35 @@ export default function Index() {
       <BaseStyles>
         <PageLayout sx={{bg: 'canvas.default'}}>
           <PageLayout.Header>
-            <Box display="flex" alignItems="center">
-              <Box
+            <Box
+              display="flex"
+              justifyContent="flex-end"
+              px={3}
+              py={2}
+            >
+              <PointerBox
+                caret="right"
+                sx={{
+                  p: 3,
+                  m: 2,
+                  bg: 'done.subtle',
+                  color: 'done.fg',
+                  borderWidth: 1,
+                  borderColor: 'done.fg',
+                  borderStyle: 'solid',
+                  width: '30%'
+                }}
+              >
+                Switch theme between bright and dark.
+              </PointerBox>
+              <SwitchButton />
+            </Box>
+            <Box p={3}>
+              <Heading
                 as="h1"
-                p={3}
               >
                 Kha`s code contributions. And tweets.
-              </Box>
-              <Box>
-                <SwitchButton />
-              </Box>
+              </Heading>
             </Box>
         </PageLayout.Header>
           <PageLayout.Content>
@@ -62,21 +84,21 @@ export default function Index() {
             </Box>
           </PageLayout.Content>
           <PageLayout.Footer>
-            <Box as="p">
-              This page has been created with the Framework{" "}
+            <Box as="p" px={3}>
+              Built with{" "}
               <Link
-                href="https://remix.ethereum.org/"
+                href="https://remix.run/"
                 target="_blank"
               >
                 Remix
               </Link>
-              {" "} and the Theming System{" "}
+              {" "}and{" "}
               <Link
                 href="https://primer.style/"
                 target="_blank"
               >
                 Primer
-              </Link>. The code is available on{" "}
+              </Link>. Available under MIT License on{" "}
               <Link
                 href="https://github.com/khamui/micro-activity"
                 target="_blank"
