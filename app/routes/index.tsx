@@ -80,9 +80,10 @@ export default function Index() {
               p={3}
             >
               <SSRProvider>
-                {activities.map((activity: any, idx: number) => (
-                  <Activity key={`activity_${idx}`} data={activity} />
-                ))}
+                {activities.length >= 0 &&
+                  activities.map((activity: any, idx: number) => (
+                    <Activity key={`activity_${idx}`} data={activity} />
+                  ))}
               </SSRProvider>
             </Box>
           </PageLayout.Content>
