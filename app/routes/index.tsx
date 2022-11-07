@@ -38,7 +38,6 @@ export default function Index() {
   return (
     <ThemeProvider
       nightScheme="dark_dimmed"
-      preventSSRMismatch
     >
       <BaseStyles>
         <PageLayout sx={{bg: 'canvas.default'}}>
