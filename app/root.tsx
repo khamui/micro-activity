@@ -9,6 +9,7 @@ import {
 } from "remix";
 import type { MetaFunction } from "remix";
 import type { LinksFunction } from "remix";
+import { SSRProvider } from "@primer/react"
 
 export const links: LinksFunction = () => {
   return [
@@ -35,7 +36,9 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <SSRProvider>
+          <Outlet />
+        </SSRProvider>
         <ScrollRestoration />
         <Scripts />
         {process.env.NODE_ENV === "development" && <LiveReload />}
