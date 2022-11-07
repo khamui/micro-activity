@@ -104,29 +104,29 @@ export const Activity = (props: any) => {
           </Box>
           <Box p={1}>
             <Timeline>
+              <SSRProvider>
               {data.messages.map((message: any, index: number) => {
                 return (
-                  <SSRProvider key={index}>
-                    <Timeline.Item condensed>
-                      <Timeline.Badge>
-                        <StyledOcticon icon={GitCommitIcon} />
-                      </Timeline.Badge>
-                      <Timeline.Body>
-                        <Truncate maxWidth={500} title={message}>
-                          {message}{" "}
-                          <Link
-                            sx={{fontSize: 1}}
-                            href={data.html_url}
-                          >
-                            Go to{" "}
-                            <ArrowRightIcon size={14} />
-                          </Link>
-                        </Truncate>
-                      </Timeline.Body>
-                    </Timeline.Item>
-                  </SSRProvider>
+                  <Timeline.Item condensed key={index}>
+                    <Timeline.Badge>
+                      <StyledOcticon icon={GitCommitIcon} />
+                    </Timeline.Badge>
+                    <Timeline.Body>
+                      <Truncate maxWidth={500} title={message}>
+                        {message}{" "}
+                        <Link
+                          sx={{fontSize: 1}}
+                          href={data.html_url}
+                        >
+                          Go to{" "}
+                          <ArrowRightIcon size={14} />
+                        </Link>
+                      </Truncate>
+                    </Timeline.Body>
+                  </Timeline.Item>
                 )
               })}
+              </SSRProvider>
             </Timeline>
           </Box>
         </Box>
