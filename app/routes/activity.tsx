@@ -69,79 +69,79 @@ export const Activity = (props: any) => {
   };
 
   return (
-    <SSRProvider>
-      <Box
-        p={3}
-        my={3}
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        borderColor="border.default"
-        borderWidth={1}
-        borderStyle="solid"
-        borderRadius={6}
-      >
-        <Box display="flex" alignItems="center">
-          <Box>
-            <CircleBadge
-              sx={{
-                borderColor: 'neutral.subtle',
-                borderWidth: 1,
-                borderStyle: 'solid'
-              }}
-              variant="medium"
-            >
-              {data.platform === "GITHUB.COM"
-                ? <LogoGithubIcon size={16} />
-                : <SquirrelIcon size={24} />
-              }
-            </CircleBadge>
-          </Box>
-          <Box p={2}>
-            <Box p={1}>
-              {data.action && contributionLabel()}{" "}
-              {data.messagetype && typeLabel()}{" "}
-              {data.coding_lang && codingLangLabel()}
-            </Box>
-            <Box p={1}>
-              <Timeline>
-                {data.messages.map((message: any, index: number) => {
-                  return (
-                  <Timeline.Item condensed key={index}>
-                    <Timeline.Badge>
-                      <StyledOcticon icon={GitCommitIcon} />
-                    </Timeline.Badge>
-                    <Timeline.Body>
-                      <Truncate maxWidth={500} title={message}>
-                        {message}{" "}
-                        <Link
-                          sx={{fontSize: 1}}
-                          href={data.html_url}
-                        >
-                          Go to{" "}
-                          <ArrowRightIcon size={14} />
-                        </Link>
-                      </Truncate>
-                    </Timeline.Body>
-                  </Timeline.Item>
-                  )
-                })}
-              </Timeline>
-            </Box>
-          </Box>
-        </Box>
+    <Box
+      p={3}
+      my={3}
+      display="flex"
+      justifyContent="space-between"
+      alignItems="center"
+      borderColor="border.default"
+      borderWidth={1}
+      borderStyle="solid"
+      borderRadius={6}
+    >
+      <Box display="flex" alignItems="center">
         <Box>
-          <Flash
+          <CircleBadge
             sx={{
-              fontSize: 1,
-              color: `${getDaysVariant(data.diff_days)}.fg`
+              borderColor: 'neutral.subtle',
+              borderWidth: 1,
+              borderStyle: 'solid'
             }}
-            variant={getDaysVariant(data.diff_days)}
+            variant="medium"
           >
-            {getDays(data.diff_days)}
-          </Flash>
+            {data.platform === "GITHUB.COM"
+              ? <LogoGithubIcon size={16} />
+              : <SquirrelIcon size={24} />
+            }
+          </CircleBadge>
+        </Box>
+        <Box p={2}>
+          <Box p={1}>
+            {data.action && contributionLabel()}{" "}
+            {data.messagetype && typeLabel()}{" "}
+            {data.coding_lang && codingLangLabel()}
+          </Box>
+          <Box p={1}>
+            <Timeline>
+              {data.messages.map((message: any, index: number) => {
+                return (
+                  <SSRProvider key={index}>
+                    <Timeline.Item condensed>
+                      <Timeline.Badge>
+                        <StyledOcticon icon={GitCommitIcon} />
+                      </Timeline.Badge>
+                      <Timeline.Body>
+                        <Truncate maxWidth={500} title={message}>
+                          {message}{" "}
+                          <Link
+                            sx={{fontSize: 1}}
+                            href={data.html_url}
+                          >
+                            Go to{" "}
+                            <ArrowRightIcon size={14} />
+                          </Link>
+                        </Truncate>
+                      </Timeline.Body>
+                    </Timeline.Item>
+                  </SSRProvider>
+                )
+              })}
+            </Timeline>
+          </Box>
         </Box>
       </Box>
-    </SSRProvider>
+      <Box>
+        <Flash
+          sx={{
+            fontSize: 1,
+            color: `${getDaysVariant(data.diff_days)}.fg`
+          }}
+          variant={getDaysVariant(data.diff_days)}
+        >
+          {getDays(data.diff_days)}
+        </Flash>
+      </Box>
+    </Box>
   );
 };
