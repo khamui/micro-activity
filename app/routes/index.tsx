@@ -38,7 +38,7 @@ export default function Index() {
   return (
     <ThemeProvider
       nightScheme="dark_dimmed"
-      colorMode="night"
+      colorMode="day"
     >
       <BaseStyles>
         <PageLayout sx={{bg: 'canvas.default'}}>
