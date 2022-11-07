@@ -80,7 +80,9 @@ export default function Index() {
                 p={3}
               >
                 {activities.map((activity: any, idx: number) => (
-                  <Activity key={`activity_${idx}`} data={activity} />
+                  <SSRProvider key={`activity_${idx}`}>
+                    <Activity data={activity} />
+                  </SSRProvider>
                 ))}
               </Box>
             </PageLayout.Content>
