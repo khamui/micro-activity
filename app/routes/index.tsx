@@ -12,7 +12,8 @@ import {
   ToggleSwitch,
   Link,
   Heading,
-  PointerBox
+  PointerBox,
+  Timeline
 } from "@primer/react";
 
 export const loader = async () => {
@@ -80,10 +81,13 @@ export default function Index() {
               p={3}
             >
               <SSRProvider>
-                {activities.length >= 0 &&
-                  activities.map((activity: any, idx: number) => (
-                    <Activity key={`activity_${idx}`} data={activity} />
-                  ))}
+                {activities.map((activity: any, idx: number) => (
+                  <Activity
+                    key={`activity_${idx}`}
+                    data={activity}
+                    Timeline={Timeline}
+                  />
+                ))}
               </SSRProvider>
             </Box>
           </PageLayout.Content>
