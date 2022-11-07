@@ -5,7 +5,6 @@ import {
   Label,
   CircleBadge,
   Link,
-  Timeline,
   StyledOcticon,
   Truncate,
   Flash
@@ -42,7 +41,7 @@ const getDaysVariant = (diffDays: number) => {
 };
 
 export const Activity = (props: any) => {
-  const { data } = props;
+  const { data, Timeline } = props;
 
   const codingLangLabel = () => {
     return (
