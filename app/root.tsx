@@ -9,7 +9,6 @@ import {
 } from "remix";
 import type { MetaFunction } from "remix";
 import type { LinksFunction } from "remix";
-import { SSRProvider } from "@primer/react"
 
 export const links: LinksFunction = () => {
   return [
@@ -28,21 +27,19 @@ export const meta: MetaFunction = () => {
 
 export default function App() {
   return (
-    <SSRProvider>
-      <html lang="en">
-        <head>
-          <meta charSet="utf-8" />
-          <meta name="viewport" content="width=device-width,initial-scale=1" />
-          <Meta />
-          <Links />
-        </head>
-        <body>
-          <Outlet />
-          <ScrollRestoration />
-          <Scripts />
-          {process.env.NODE_ENV === "development" && <LiveReload />}
-        </body>
-      </html>
-    </SSRProvider>
+    <html lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <Outlet />
+        <ScrollRestoration />
+        <Scripts />
+        {process.env.NODE_ENV === "development" && <LiveReload />}
+      </body>
+    </html>
   );
 }

@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  SSRProvider,
   Box,
   Label,
   CircleBadge,
@@ -102,31 +101,29 @@ export const Activity = (props: any) => {
             {data.coding_lang && codingLangLabel()}
           </Box>
           <Box p={1}>
-            <SSRProvider>
-              <Timeline>
-                {data.messages.map((message: any, index: number) => {
-                  return (
-                    <Timeline.Item condensed key={index}>
-                      <Timeline.Badge>
-                        <StyledOcticon icon={GitCommitIcon} />
-                      </Timeline.Badge>
-                      <Timeline.Body>
-                        <Truncate maxWidth={500} title={message}>
-                          {message}{" "}
-                          <Link
-                            sx={{fontSize: 1}}
-                            href={data.html_url}
-                          >
-                            Go to{" "}
-                            <ArrowRightIcon size={14} />
-                          </Link>
-                        </Truncate>
-                      </Timeline.Body>
-                    </Timeline.Item>
-                  )
-                })}
-              </Timeline>
-            </SSRProvider>
+            <Timeline>
+              {data.messages.map((message: any, index: number) => {
+                return (
+                  <Timeline.Item condensed key={index}>
+                    <Timeline.Badge>
+                      <StyledOcticon icon={GitCommitIcon} />
+                    </Timeline.Badge>
+                    <Timeline.Body>
+                      <Truncate maxWidth={500} title={message}>
+                        {message}{" "}
+                        <Link
+                          sx={{fontSize: 1}}
+                          href={data.html_url}
+                        >
+                          Go to{" "}
+                          <ArrowRightIcon size={14} />
+                        </Link>
+                      </Truncate>
+                    </Timeline.Body>
+                  </Timeline.Item>
+                )
+              })}
+            </Timeline>
           </Box>
         </Box>
       </Box>
