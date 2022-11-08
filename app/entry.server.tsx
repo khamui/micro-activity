@@ -2,7 +2,7 @@ import React from "react";
 import { renderToString } from "react-dom/server";
 import { RemixServer } from "remix";
 import type { EntryContext } from "remix";
-import { ServerStyleSheet, StyleSheetManager } from "styled-components";
+import { ServerStyleSheet } from "styled-components";
 
 export default function handleRequest(
   request: Request,
@@ -14,9 +14,9 @@ export default function handleRequest(
   const sheet = new ServerStyleSheet();
   try {
     const markup = renderToString(
-      <StyleSheetManager sheet={sheet.instance}>
+      sheet.collectStyles(
         <RemixServer context={remixContext} url={request.url} />
-      </StyleSheetManager>
+      )
     );
     // const styleTags = sheet.getStyleTags(); // or sheet.getStyleElement();
     // console.log('STYLE TAGS FROM SERVER', styleTags);
