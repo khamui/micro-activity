@@ -3,6 +3,7 @@ import { useLoaderData } from "remix";
 import { Activity } from "./activity";
 import { ActivitiesService } from "../services/ActivitiesService"
 import {
+  SSRProvider,
   ThemeProvider,
   BaseStyles,
   Box,
@@ -79,13 +80,15 @@ export default function Index() {
             <Box
               p={3}
             >
-              {activities.map((activity: any, idx: number) => (
-                <Activity
-                  key={`activity_${idx}`}
-                  data={activity}
-                  Timeline={Timeline}
-                />
-              ))}
+              <SSRProvider>
+                {activities.map((activity: any, idx: number) => (
+                  <Activity
+                    key={`activity_${idx}`}
+                    data={activity}
+                    Timeline={Timeline}
+                  />
+                ))}
+              </SSRProvider>
             </Box>
           </PageLayout.Content>
           <PageLayout.Footer>
