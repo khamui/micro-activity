@@ -12,7 +12,8 @@ import {
   Link,
   Heading,
   PointerBox,
-  Timeline
+  Timeline,
+  SSRProvider
 } from "@primer/react";
 
 export const loader = async () => {
@@ -80,11 +81,12 @@ export default function Index() {
               p={3}
             >
               {activities.map((activity: any, idx: number) => (
-                <Activity
-                  key={`activity_${idx}`}
-                  data={activity}
-                  Timeline={Timeline}
-                />
+                <SSRProvider key={`activity_${idx}`}>
+                  <Activity
+                    data={activity}
+                    Timeline={Timeline}
+                  />
+                </SSRProvider>
               ))}
             </Box>
           </PageLayout.Content>
