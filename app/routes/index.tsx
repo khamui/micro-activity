@@ -12,12 +12,7 @@ import {
   Link,
   Heading,
   PointerBox,
-  Timeline,
-  Label,
-  CircleBadge,
-  StyledOcticon,
-  Truncate,
-  Flash
+  Timeline
 } from "@primer/react";
 
 export const loader = async () => {
