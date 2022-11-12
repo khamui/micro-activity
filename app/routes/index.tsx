@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLoaderData } from "remix";
 import { Activity } from "./activity";
 import { ActivitiesService } from "../services/ActivitiesService"
@@ -12,8 +12,6 @@ import {
   Link,
   Heading,
   PointerBox,
-  Timeline,
-  SSRProvider
 } from "@primer/react";
 
 export const loader = async () => {
@@ -23,6 +21,12 @@ export const loader = async () => {
 
 function SwitchButton() {
   const {colorMode, setColorMode} = useTheme()
+
+  // FIXME: Workaround
+  useEffect(() => {
+    setColorMode('day');
+  }, [colorMode])
+
   return (
     <ToggleSwitch
       size="small"
@@ -40,7 +44,7 @@ export default function Index() {
   return (
     <ThemeProvider
       nightScheme="dark_dimmed"
-      colorMode="day"
+      preventSSRMismatch
     >
       <BaseStyles>
         <PageLayout sx={{bg: 'canvas.default'}}>
@@ -81,12 +85,10 @@ export default function Index() {
               p={3}
             >
               {activities.map((activity: any, idx: number) => (
-                <SSRProvider key={`activity_${idx}`}>
-                  <Activity
-                    data={activity}
-                    Timeline={Timeline}
-                  />
-                </SSRProvider>
+                <Activity
+                  key={`activity_${idx}`}
+                  data={activity}
+                />
               ))}
             </Box>
           </PageLayout.Content>
