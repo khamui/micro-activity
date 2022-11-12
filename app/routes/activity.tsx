@@ -6,6 +6,7 @@ import {
   Link,
   StyledOcticon,
   Truncate,
+  Timeline,
   Flash
 } from "@primer/react";
 import {
@@ -40,7 +41,7 @@ const getDaysVariant = (diffDays: number) => {
 };
 
 export const Activity = (props: any) => {
-  const { data, Timeline } = props;
+  const { data } = props;
 
   const codingLangLabel = () => {
     return (
