@@ -22,11 +22,6 @@ export const loader = async () => {
 function SwitchButton() {
   const {colorMode, setColorMode} = useTheme()
 
-  // FIXME: Workaround
-  useEffect(() => {
-    setColorMode('day');
-  }, [colorMode])
-
   return (
     <ToggleSwitch
       size="small"
