@@ -9,7 +9,7 @@
     "postinstall": "remix setup node"
   },
   "dependencies": {
-    "@netlify/functions": "1.0.0",
+    "@netlify/functions": "1.4.0",
     "@primer/octicons-react": "^17.2.0",
     "@primer/react": "^35.2.1",
     "@remix-run/netlify": "1.7.5",
